@@ -19,20 +19,50 @@ import com.sun.javadoc.DocErrorReporter;
 import com.sun.javadoc.Doclet;
 import com.sun.javadoc.LanguageVersion;
 import com.sun.javadoc.RootDoc;
-import org.asciidoctor.outputdoclet.DocletIterator;
-import org.asciidoctor.outputdoclet.StandardAdapter;
 
 
+/**
+ * Class level comment
+ */
 public class OutputDoclet extends Doclet {
 
-    private final RootDoc rootDoc;
-    private final DocletIterator iterator;
+    /**
+     * Inner class commend
+     */
+    public static class InnerClass {
 
-    public OutputDoclet(RootDoc rootDoc) {
-        this.rootDoc = rootDoc;
-        this.iterator = new DocletIterator();
+        /**
+         * Inner class constructor
+         */
+        public InnerClass(){
+
+        }
+
+        /**
+         * Inner class method
+         */
+        public void run(){}
     }
 
+    /**
+     * Field comment
+     */
+    private final RootDoc rootDoc;
+
+    /**
+     * Constructor comment
+     * @param rootDoc
+     */
+    public OutputDoclet(RootDoc rootDoc) {
+        this.rootDoc = rootDoc;
+    }
+
+    /**
+     * Method comment
+     * @param options
+     * @param errorReporter
+     * @return
+     */
     @SuppressWarnings("UnusedDeclaration")
     public static boolean validOptions(String[][] options, DocErrorReporter errorReporter) {
         return new StandardAdapter().validOptions(options, errorReporter);
@@ -50,16 +80,19 @@ public class OutputDoclet extends Doclet {
 
     @SuppressWarnings("UnusedDeclaration")
     public static boolean start(RootDoc rootDoc) {
-        return new OutputDoclet(rootDoc).start(new StandardAdapter());
+        return new OutputDoclet(rootDoc).start();
     }
 
-    boolean start(StandardAdapter standardDoclet) {
-        return run(standardDoclet);
+    boolean start() {
+        return run();
     }
 
-    private boolean run(StandardAdapter standardDoclet) {
+    /**
+     * Private method comment
+     * @return
+     */
+    private boolean run() {
         OutputRenderer renderer = new OutputRenderer();
-        return iterator.render(rootDoc, renderer) &&
-                standardDoclet.start(rootDoc);
+        return renderer.render(rootDoc);
     }
 }
