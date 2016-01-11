@@ -72,9 +72,9 @@ public class OutputRenderer {
     }
 
     private void outputText(String tag, String comment, PrintWriter writer) {
-        writer.println("// tag::" + tag);
+        writer.println("// tag::" + tag + "[]");
         writer.println(cleanJavadocInput(comment));
-        writer.println("// end::" + tag);
+        writer.println("// end::" + tag + "[]");
     }
 
     protected String cleanJavadocInput(String input) {
