@@ -24,7 +24,7 @@ import com.sun.javadoc.RootDoc;
 /**
  * Class level comment
  */
-public class OutputDoclet extends Doclet {
+public class ExportDoclet extends Doclet {
 
     /**
      * Inner class commend
@@ -53,7 +53,7 @@ public class OutputDoclet extends Doclet {
      * Constructor comment
      * @param rootDoc
      */
-    public OutputDoclet(RootDoc rootDoc) {
+    public ExportDoclet(RootDoc rootDoc) {
         this.rootDoc = rootDoc;
     }
 
@@ -80,7 +80,7 @@ public class OutputDoclet extends Doclet {
 
     @SuppressWarnings("UnusedDeclaration")
     public static boolean start(RootDoc rootDoc) {
-        return new OutputDoclet(rootDoc).start();
+        return new ExportDoclet(rootDoc).start();
     }
 
     boolean start() {
@@ -92,7 +92,7 @@ public class OutputDoclet extends Doclet {
      * @return
      */
     private boolean run() {
-        OutputRenderer renderer = new OutputRenderer();
+        ExportRenderer renderer = new ExportRenderer();
         return renderer.render(rootDoc);
     }
 }

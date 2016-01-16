@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.asciidoctor</groupId>
-    <artifactId>outputdoclet</artifactId>
+    <artifactId>exportdoclet</artifactId>
     <packaging>jar</packaging>
     <version>1.5.3-SNAPSHOT</version>
 
@@ -17,7 +17,7 @@
     </parent>
 
     <url>http://asciidoctor.org</url>
-    <description>Outputdoclet is a Javadoc Doclet that exports javadocs to files.</description>
+    <description>Exportdoclet is a Javadoc Doclet that exports javadocs to files.</description>
 
     <licenses>
         <license>
@@ -27,16 +27,16 @@
     </licenses>
 
     <scm>
-        <url>http://github.com/johncarl81/outputdoclet</url>
-        <connection>scm:git:git@github.com:johncarl81/outputdoclet.git</connection>
-        <developerConnection>scm:git:git@github.com:johncarl81/outputdoclet.git</developerConnection>
+        <url>http://github.com/johncarl81/exportdoclet</url>
+        <connection>scm:git:git@github.com:johncarl81/exportdoclet.git</connection>
+        <developerConnection>scm:git:git@github.com:johncarl81/exportdoclet.git</developerConnection>
     </scm>
 
     <distributionManagement>
         <repository>
-            <id>bintray-asciidoctor-maven-outputdoclet</id>
-            <name>asciidoctor-maven-outputdoclet</name>
-            <url>https://api.bintray.com/maven/asciidoctor/maven/outputdoclet</url>
+            <id>bintray-asciidoctor-maven-exportdoclet</id>
+            <name>asciidoctor-maven-exportdoclet</name>
+            <url>https://api.bintray.com/maven/asciidoctor/maven/exportdoclet</url>
         </repository>
     </distributionManagement>
 
@@ -133,10 +133,10 @@
                 </executions>
                 <configuration>
                     <source>1.7</source>
-                    <doclet>org.asciidoctor.OutputDoclet</doclet>
+                    <doclet>org.asciidoctor.ExportDoclet</doclet>
                     <docletArtifact>
                         <groupId>org.asciidoctor</groupId>
-                        <artifactId>outputdoclet</artifactId>
+                        <artifactId>exportdoclet</artifactId>
                         <version>${project.version}</version>
                     </docletArtifact>
                 </configuration>

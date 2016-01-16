@@ -9,7 +9,7 @@ import java.util.Set;
 /**
  * @author John Ericksen
  */
-public class OutputRenderer {
+public class ExportRenderer {
 
     public boolean render(RootDoc rootDoc) {
         Set<PackageDoc> packages = new HashSet<PackageDoc>();
