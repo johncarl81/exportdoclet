@@ -1,8 +1,16 @@
 package org.asciidoctor;
 
-import com.sun.javadoc.*;
+import com.sun.javadoc.AnnotationTypeDoc;
+import com.sun.javadoc.ClassDoc;
+import com.sun.javadoc.MemberDoc;
+import com.sun.javadoc.PackageDoc;
+import com.sun.javadoc.RootDoc;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.HashSet;
 import java.util.Set;
 

@@ -1,0 +1,3 @@
+= Exportdoclet
+
+image:https://travis-ci.org/johncarl81/exportdoclet.svg?branch=master["Build Status", link="https://travis-ci.org/johncarl81/exportdoclet"]
