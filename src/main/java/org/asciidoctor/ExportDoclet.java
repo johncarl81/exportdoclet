@@ -72,14 +72,6 @@ public class ExportDoclet extends Doclet {
     }
 
     boolean start() {
-        return run();
-    }
-
-    /**
-     * Private method comment
-     * @return
-     */
-    private boolean run() {
         ExportRenderer renderer = new ExportRenderer();
         return renderer.render(rootDoc);
     }
