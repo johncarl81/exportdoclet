@@ -30,24 +30,6 @@ import com.sun.javadoc.RootDoc;
 public class ExportDoclet extends Doclet {
 
     /**
-     * Inner class commend
-     */
-    public static class InnerClass {
-
-        /**
-         * Inner class constructor
-         */
-        public InnerClass(){
-
-        }
-
-        /**
-         * Inner class method
-         */
-        public void run(){}
-    }
-
-    /**
      * Holds the root of the program structure information.
      * From this root all other program structure information can be extracted.
      */
