@@ -20,9 +20,12 @@ import com.sun.javadoc.Doclet;
 import com.sun.javadoc.LanguageVersion;
 import com.sun.javadoc.RootDoc;
 
-
 /**
- * Class level comment
+ * A {@link Doclet} that exports javadoc comments containing asciidoc text to asciidoc files,
+ * instead of specific final formats such as HTML.
+ *
+ * @author John Ericksen
+ * @see ExportRenderer
  */
 public class ExportDoclet extends Doclet {
 
@@ -45,13 +48,16 @@ public class ExportDoclet extends Doclet {
     }
 
     /**
-     * Field comment
+     * Holds the root of the program structure information.
+     * From this root all other program structure information can be extracted.
      */
     private final RootDoc rootDoc;
 
     /**
-     * Constructor comment
-     * @param rootDoc
+     * Creates a ExportDoclet.
+     *
+     * @param rootDoc holds the root of the program structure information.
+     *                From this root all other program structure information can be extracted.
      */
     public ExportDoclet(RootDoc rootDoc) {
         this.rootDoc = rootDoc;

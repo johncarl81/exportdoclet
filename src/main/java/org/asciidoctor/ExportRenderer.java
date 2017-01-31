@@ -30,23 +30,41 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * A renderer class that actually exports javadoc comments containing asciidoc text to asciidoc files,
+ * instead of specific final formats such as HTML.
+ * It is used when the {@link ExportDoclet} is started.
+ *
  * @author John Ericksen
  */
 public class ExportRenderer {
 
+    /**
+     * Renders classes and packages javadocs, inside a {@link RootDoc} object, to asciidoc files.
+     *
+     * @param rootDoc holds the root of the program structure information.
+     *                From this root all other program structure information can be extracted.
+     * @return true if successful, false otherwise
+     */
     public boolean render(RootDoc rootDoc) {
         Set<PackageDoc> packages = new HashSet<PackageDoc>();
         for (ClassDoc doc : rootDoc.classes()) {
             packages.add(doc.containingPackage());
             renderClass(doc);
         }
+
         for (PackageDoc doc : packages) {
             renderPackage(doc);
             //renderer.renderDoc(doc);
         }
+
         return true;
     }
 
+    /**
+     * Renders a class documentation to an asciidoc file.
+     *
+     * @param doc the class documentation object
+     */
     public void renderClass(ClassDoc doc) {
         try {
             PrintWriter writer = getWriter(doc.containingPackage(), doc.name());
@@ -76,6 +94,11 @@ public class ExportRenderer {
         }
     }
 
+    /**
+     * Renders a package documentation to an asciidoc file.
+     *
+     * @param doc the package documentation object
+     */
     public void renderPackage(PackageDoc doc){
         try {
             PrintWriter writer = getWriter(doc, "package-info");
@@ -94,6 +117,14 @@ public class ExportRenderer {
         }
     }
 
+    /**
+     * Exports a javadoc comment using a given {@link PrintWriter}, surrounding
+     * it by a asciidoc tag with a specific name.
+     *
+     * @param tag the name of the tag to surround the javadoc comment into the asciidoc file
+     * @param comment the javadoc comment to export
+     * @param writer the {@link PrintWriter} to be used to export the javadoc comment to an asciidoc file
+     */
     private void outputText(String tag, String comment, PrintWriter writer) {
         writer.println("// tag::" + tag + "[]");
         writer.println(cleanJavadocInput(comment));
@@ -106,6 +137,15 @@ public class ExportRenderer {
                 .replaceAll("(?m)^( *)\\*\\\\/$", "$1*/"); // Multi-line comment end tag is translated into */.
     }
 
+    /**
+     * Gets a {@link PrintWriter} to export the documentation of a class or package
+     * to an asciidoc file.
+     *
+     * @param packageDoc the package documentation object that will be the package that the documentation
+     *                   is being exported or the package of the class that its documentation
+     *                   is being exported
+     * @param name the name of the asciidoc file to export the documentation to
+     */
     private PrintWriter getWriter(PackageDoc packageDoc, String name) throws FileNotFoundException {
         File pacakgeDirectory = new File(packageDoc.name().replace('.', File.separatorChar));
         if(!pacakgeDirectory.exists()){
