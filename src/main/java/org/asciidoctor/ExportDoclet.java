@@ -35,14 +35,17 @@ public class ExportDoclet extends Doclet {
      */
     private final RootDoc rootDoc;
 
+    private final ExportRenderer renderer;
+
     /**
      * Creates a ExportDoclet to export javadoc comments to asciidoc files.
      *
-     * @param rootDoc holds the root of the program structure information.
+     * @param rootDoc the root of the program structure information.
      *                From this root all other program structure information can be extracted.
      */
     public ExportDoclet(RootDoc rootDoc) {
         this.rootDoc = rootDoc;
+        this.renderer = new ExportRenderer();
     }
 
     /**
@@ -89,11 +92,14 @@ public class ExportDoclet extends Doclet {
      */
     @SuppressWarnings("UnusedDeclaration")
     public static boolean start(RootDoc rootDoc) {
-        return new ExportDoclet(rootDoc).start();
+        return new ExportDoclet(rootDoc).render();
     }
 
-    boolean start() {
-        ExportRenderer renderer = new ExportRenderer();
+    /**
+     * Renders the javadoc documentation for all elements inside the {@link #rootDoc} attribute.
+     * @return true if the {@link #rootDoc} was rendered successfully, false otherwise
+     */
+    private boolean render(){
         return renderer.render(rootDoc);
     }
 }
