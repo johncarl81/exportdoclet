@@ -1,3 +1,38 @@
-= Exportdoclet
+= ExportDoclet
 
-image:https://travis-ci.org/johncarl81/exportdoclet.svg?branch=master["Build Status", link="https://travis-ci.org/johncarl81/exportdoclet"]
+image:https://travis-ci.org/johncarl81/exportdoclet.svg?branch=master["Build Status", link="https://travis-ci.org/johncarl81/exportdoclet"] image:http://img.shields.io/badge/license-ASF2-blue.svg["Apache License 2", link="http://www.apache.org/licenses/LICENSE-2.0.txt"]
+
+A link:http://docs.oracle.com/javase/1.5.0/docs/guide/javadoc/doclet/overview.html[Doclet] that allows exporting javadoc
+comments containing link:http://asciidoctor.org[AsciiDoc] text to AsciiDoc files, enabling combining the javadoc
+documentation into the AsciiDoc documentation for your Java project.
+
+Instead of exporting the javadoc comments to standard HTML files, the ExportDoclet exports them to AsciiDoc files,
+that in turn can converted to any output format supported by the link:http://asciidoctor.org[AsciiDoctor toolchain].
+
+== Building the ExportDoclet
+
+ExportDoclet is a Java Maven project that can be built directly from any IDE or using the following maven command:
+
+[source,bash]
+mvn clean package install
+
+That will build the tool and install it at your local maven repository, usually at the .m2 directory
+inside your home directory.
+
+== Using the ExportDoclet with javadoc tool
+
+To manually call the javadoc tool by command line using the ExportDoclet you have to follow
+the next steps in a terminal:
+
+- Enter into the folder that contains the java files with javadoc comments you want to export
+- Execute `javadoc -docletpath $DOCLETJAR -doclet org.asciidoctor.ExportDoclet -d $OUTPUTDIR *.java`,
+where `$DOCLETJAR` is the path for the ExportDoclet jar file and `$OUTPUTDIR` is where you want
+to save the exported javadocs.
+
+== Using ExportDoclet with Maven
+
+- Information will be provided soon
+
+== Additional References
+- link:http://www.manpagez.com/man/1/javadoc/[The javadoc command line manual]
+- link:http://www.oracle.com/technetwork/articles/java/index-jsp-135444.html[Javadoc Tool Home Page]

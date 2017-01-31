@@ -21,7 +21,7 @@ import com.sun.javadoc.LanguageVersion;
 import com.sun.javadoc.RootDoc;
 
 /**
- * A {@link Doclet} that exports javadoc comments containing asciidoc text to asciidoc files,
+ * A {@link Doclet} that exports javadoc comments containing AsciiDoc text to AsciiDoc files,
  * instead of specific final formats such as HTML.
  *
  * @author John Ericksen
@@ -38,7 +38,7 @@ public class ExportDoclet extends Doclet {
     private final ExportRenderer renderer;
 
     /**
-     * Creates a ExportDoclet to export javadoc comments to asciidoc files.
+     * Creates a ExportDoclet to export javadoc comments to AsciiDoc files.
      *
      * @param rootDoc the root of the program structure information.
      *                From this root all other program structure information can be extracted.

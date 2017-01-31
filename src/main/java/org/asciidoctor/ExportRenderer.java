@@ -30,7 +30,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * A renderer class that actually exports javadoc comments containing asciidoc text to asciidoc files,
+ * A renderer class that actually exports javadoc comments containing AsciiDoc text to AsciiDoc files,
  * instead of specific final formats such as HTML.
  * It is used when the {@link ExportDoclet} is started.
  *
@@ -39,7 +39,7 @@ import java.util.Set;
 public class ExportRenderer {
 
     /**
-     * Renders classes and packages javadocs, inside a {@link RootDoc} object, to asciidoc files.
+     * Renders classes and packages javadocs, inside a {@link RootDoc} object, to AsciiDoc files.
      *
      * @param rootDoc holds the root of the program structure information.
      *                From this root all other program structure information can be extracted.
@@ -61,11 +61,11 @@ public class ExportRenderer {
     }
 
     /**
-     * Renders a class documentation to an asciidoc file.
+     * Renders a class documentation to an AsciiDoc file.
      *
      * @param doc the class documentation object
      */
-    public void renderClass(ClassDoc doc) {
+    private void renderClass(ClassDoc doc) {
         try {
             PrintWriter writer = getWriter(doc.containingPackage(), doc.name());
             if (doc.position() != null) {
@@ -95,11 +95,11 @@ public class ExportRenderer {
     }
 
     /**
-     * Renders a package documentation to an asciidoc file.
+     * Renders a package documentation to an AsciiDoc file.
      *
      * @param doc the package documentation object
      */
-    public void renderPackage(PackageDoc doc){
+    private void renderPackage(PackageDoc doc){
         try {
             PrintWriter writer = getWriter(doc, "package-info");
             writer.println(doc.name());
@@ -119,11 +119,11 @@ public class ExportRenderer {
 
     /**
      * Exports a javadoc comment using a given {@link PrintWriter}, surrounding
-     * it by a asciidoc tag with a specific name.
+     * it by a AsciiDoc tag with a specific name.
      *
-     * @param tag the name of the tag to surround the javadoc comment into the asciidoc file
+     * @param tag the name of the tag to surround the javadoc comment into the AsciiDoc file
      * @param comment the javadoc comment to export
-     * @param writer the {@link PrintWriter} to be used to export the javadoc comment to an asciidoc file
+     * @param writer the {@link PrintWriter} to be used to export the javadoc comment to an AsciiDoc file
      */
     private void outputText(String tag, String comment, PrintWriter writer) {
         writer.println("// tag::" + tag + "[]");
@@ -131,7 +131,7 @@ public class ExportRenderer {
         writer.println("// end::" + tag + "[]");
     }
 
-    protected String cleanJavadocInput(String input) {
+    private String cleanJavadocInput(String input) {
         return input.trim()
                 .replaceAll("\n ", "\n") // Newline space to accommodate javadoc newlines.
                 .replaceAll("(?m)^( *)\\*\\\\/$", "$1*/"); // Multi-line comment end tag is translated into */.
@@ -139,19 +139,20 @@ public class ExportRenderer {
 
     /**
      * Gets a {@link PrintWriter} to export the documentation of a class or package
-     * to an asciidoc file.
+     * to an AsciiDoc file.
      *
      * @param packageDoc the package documentation object that will be the package that the documentation
      *                   is being exported or the package of the class that its documentation
      *                   is being exported
-     * @param name the name of the asciidoc file to export the documentation to
+     * @param name the name of the AsciiDoc file to export the documentation to
      */
     private PrintWriter getWriter(PackageDoc packageDoc, String name) throws FileNotFoundException {
-        File pacakgeDirectory = new File(packageDoc.name().replace('.', File.separatorChar));
-        if(!pacakgeDirectory.exists()){
-            pacakgeDirectory.mkdirs();
+        File packageDirectory = new File(packageDoc.name().replace('.', File.separatorChar));
+        if(!packageDirectory.exists() && !packageDirectory.mkdirs()){
+            throw new RuntimeException("The directory was not created due to unknown reason.");
         }
-        File file = new File(pacakgeDirectory, name + ".adoc");
+
+        File file = new File(packageDirectory, name + ".adoc");
         return new PrintWriter(new OutputStreamWriter(new FileOutputStream(file)));
     }
 }
