@@ -36,7 +36,7 @@ public class ExportDoclet extends Doclet {
     private final RootDoc rootDoc;
 
     /**
-     * Creates a ExportDoclet.
+     * Creates a ExportDoclet to export javadoc comments to asciidoc files.
      *
      * @param rootDoc holds the root of the program structure information.
      *                From this root all other program structure information can be extracted.
@@ -46,26 +46,47 @@ public class ExportDoclet extends Doclet {
     }
 
     /**
-     * Method comment
-     * @param options
-     * @param errorReporter
-     * @return
+     * Validates command line options.
+     *
+     * @param options the array of given options
+     * @param errorReporter an object that allows printing error messages for invalid options
+     * @return true if the options are valid, false otherwise
+     * @see Doclet#validOptions(String[][], DocErrorReporter)
      */
     @SuppressWarnings("UnusedDeclaration")
     public static boolean validOptions(String[][] options, DocErrorReporter errorReporter) {
         return new StandardAdapter().validOptions(options, errorReporter);
     }
 
+    /**
+     * Gets the number of arguments that a given command line option must contain.
+     * @param option the command line option
+     * @return the number of arguments required for the given option
+     * @see Doclet#optionLength(String)
+     */
     @SuppressWarnings("UnusedDeclaration")
     public static int optionLength(String option) {
         return new StandardAdapter().optionLength(option);
     }
 
+    /**
+     * Return the version of the Java Programming Language supported
+     * by this doclet.
+     * @return the Java language supported version
+     * @see Doclet#languageVersion()
+     */
     @SuppressWarnings("UnusedDeclaration")
     public static LanguageVersion languageVersion() {
         return LanguageVersion.JAVA_1_5;
     }
 
+    /**
+     * Starts the doclet.
+     * @param rootDoc the root of the program structure information.
+     *                From this root all other program structure information can be extracted.
+     * @return true if the doclet was started successfuly, false otherwise
+     * @see Doclet#start(RootDoc)
+     */
     @SuppressWarnings("UnusedDeclaration")
     public static boolean start(RootDoc rootDoc) {
         return new ExportDoclet(rootDoc).start();
