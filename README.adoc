@@ -57,7 +57,7 @@ To generate just the AsciiDoc files and ignore the genration of the default HTML
 </plugin>
 --
 
-Now, to generate the javadocs in AsciiDoc files you can execute the javadoc:javadoc goal in Maven, using your IDE or the command line inside your project root directory:
+Now, to generate the javadocs in AsciiDoc files you can execute the `javadoc:javadoc` goal in Maven, using your IDE or the command line inside your project root directory:
 
 [source,bash]
 mvn javadoc:javadoc
@@ -119,6 +119,12 @@ If you want to generate both the AsciiDoc and HTML files, that requires two diff
     </executions>
 </plugin>
 --
+
+Now, to generate the javadocs both in AsciiDoc and HTML files, you can execute the `package` goal in Maven, using your IDE or the command line inside your project root directory:
+
+[source,bash]
+mvn package
+
 
 You can see a link:sample[sample project] that has some java files with javadocs containing AsciiDoc, and that has everything configured in the pom.xml.
 
