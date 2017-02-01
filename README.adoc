@@ -19,7 +19,7 @@ mvn clean package install
 That will build the tool and install it at your local maven repository, usually at the .m2 directory
 inside your home directory.
 
-== Using the ExportDoclet with javadoc tool
+== Using the ExportDoclet with javadoc by command line
 
 To manually call the javadoc tool by command line using the ExportDoclet you have to follow
 the next steps in a terminal:
@@ -29,9 +29,42 @@ the next steps in a terminal:
 where `$DOCLETJAR` is the path for the ExportDoclet jar file and `$OUTPUTDIR` is where you want
 to save the exported javadocs.
 
-== Using ExportDoclet with Maven
+== Using ExportDoclet with Maven javadoc plugin
 
-- Information will be provided soon
+Using the ExportDoclet with Maven is pretty simple. You can include the maven-javadoc-plugin configuration inside the `<build>` section of project's pom.xml file, defining the required configuration for the javadoc command line tool that was used above. 
+
+The sub-sections below present some distinct configurations.
+
+=== Generating only the AsciiDoc files
+
+To generate just the AsciiDoc files and ignore the genration of the default HTML files, you can include the following code to the `<build>` section of your project's pom.xml.
+
+[source,xml]
+--
+include::sample/pom.xml[tags=exportdoclet-only,indent=0]
+--
+
+Now, to generate the javadocs in AsciiDoc files you can execute the javadoc:javadoc goal in Maven, using your IDE or the command line inside your project root directory:
+
+[source,bash]
+mvn javadoc:javadoc
+
+The exported javadocs to AsciiDoc files will be found at target/site/apidocs directory.
+
+=== Generating both the AsciiDoc and default HTML files
+
+If you want to generate both the AsciiDoc and HTML files, that requires two different configurations for the maven-javadoc-plugin, as exemplified below:
+
+[source,xml]
+--
+include::sample/pom.xml[tags=asciidoclets,indent=0]
+--
+
+You can see a link:sample[sample project] that has some java files with javadocs containing AsciiDoc, and that has everything configured in the pom.xml.
+
+== Contributors
+
+- link:http://twitter.com/manoelcampos[Manoel Campos da Silva Filho]
 
 == Additional References
 - link:http://www.manpagez.com/man/1/javadoc/[The javadoc command line manual]

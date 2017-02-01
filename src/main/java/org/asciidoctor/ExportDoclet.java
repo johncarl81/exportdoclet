@@ -29,13 +29,19 @@ import com.sun.javadoc.RootDoc;
  */
 public class ExportDoclet extends Doclet {
 
-    /**
-     * Holds the root of the program structure information.
-     * From this root all other program structure information can be extracted.
-     */
-    private final RootDoc rootDoc;
-
     private final ExportRenderer renderer;
+
+    /**
+     * Starts the doclet.
+     * @param rootDoc the root of the program structure information.
+     *                From this root all other program structure information can be extracted.
+     * @return true if the doclet was started successfuly, false otherwise
+     * @see Doclet#start(RootDoc)
+     */
+    @SuppressWarnings("UnusedDeclaration")
+    public static boolean start(RootDoc rootDoc) {
+        return new ExportDoclet(rootDoc).render();
+    }
 
     /**
      * Creates a ExportDoclet to export javadoc comments to AsciiDoc files.
@@ -44,8 +50,7 @@ public class ExportDoclet extends Doclet {
      *                From this root all other program structure information can be extracted.
      */
     public ExportDoclet(RootDoc rootDoc) {
-        this.rootDoc = rootDoc;
-        this.renderer = new ExportRenderer();
+        this.renderer = new ExportRenderer(rootDoc);
     }
 
     /**
@@ -84,22 +89,11 @@ public class ExportDoclet extends Doclet {
     }
 
     /**
-     * Starts the doclet.
-     * @param rootDoc the root of the program structure information.
-     *                From this root all other program structure information can be extracted.
-     * @return true if the doclet was started successfuly, false otherwise
-     * @see Doclet#start(RootDoc)
-     */
-    @SuppressWarnings("UnusedDeclaration")
-    public static boolean start(RootDoc rootDoc) {
-        return new ExportDoclet(rootDoc).render();
-    }
-
-    /**
-     * Renders the javadoc documentation for all elements inside the {@link #rootDoc} attribute.
-     * @return true if the {@link #rootDoc} was rendered successfully, false otherwise
+     * Renders the javadoc documentation for all elements inside the {@link RootDoc} object
+     * received by this doclet.
+     * @return true if the {@link RootDoc} was rendered successfully, false otherwise
      */
     private boolean render(){
-        return renderer.render(rootDoc);
+        return renderer.render();
     }
 }

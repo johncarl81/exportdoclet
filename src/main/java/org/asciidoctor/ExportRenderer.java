@@ -26,6 +26,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -37,15 +38,22 @@ import java.util.Set;
  * @author John Ericksen
  */
 public class ExportRenderer {
+    /**
+     * Holds the root of the program structure information.
+     * From this root all other program structure information can be extracted.
+     */
+    private final RootDoc rootDoc;
+
+    public ExportRenderer(RootDoc rootDoc){
+        this.rootDoc = rootDoc;
+    }
 
     /**
      * Renders classes and packages javadocs, inside a {@link RootDoc} object, to AsciiDoc files.
      *
-     * @param rootDoc holds the root of the program structure information.
-     *                From this root all other program structure information can be extracted.
      * @return true if successful, false otherwise
      */
-    public boolean render(RootDoc rootDoc) {
+    public boolean render() {
         Set<PackageDoc> packages = new HashSet<PackageDoc>();
         for (ClassDoc doc : rootDoc.classes()) {
             packages.add(doc.containingPackage());
@@ -147,7 +155,7 @@ public class ExportRenderer {
      * @param name the name of the AsciiDoc file to export the documentation to
      */
     private PrintWriter getWriter(PackageDoc packageDoc, String name) throws FileNotFoundException {
-        File packageDirectory = new File(packageDoc.name().replace('.', File.separatorChar));
+        File packageDirectory = new File(getOutputDir() + packageDoc.name().replace('.', File.separatorChar));
         if(!packageDirectory.exists() && !packageDirectory.mkdirs()){
             throw new RuntimeException("The directory was not created due to unknown reason.");
         }
@@ -155,4 +163,39 @@ public class ExportRenderer {
         File file = new File(packageDirectory, name + ".adoc");
         return new PrintWriter(new OutputStreamWriter(new FileOutputStream(file)));
     }
+
+    /**
+     * Gets the output directory passed as a command line argument to javadoc tool.
+     * @return the output directory to export the javadocs
+     */
+    private String getOutputDir() {
+        for (String[] option : rootDoc.options()) {
+            if(option.length == 2 && option[0].equals("-d")) {
+                return includeTrailingDirSeparator(option[1]);
+            }
+        }
+
+        return "";
+    }
+
+    /**
+     * Adds a trailing slash at the end of a path if it doesn't have one yet.
+     * The trailing slash type is system-dependent and will be accordingly selected.
+     *
+     * @param path the path to include a trailing slash
+     * @return the path with a trailing slash if there wasn't one and the path is not empty,
+     * the original path otherwise
+     */
+    private String includeTrailingDirSeparator(String path){
+        if(path.trim().isEmpty()) {
+            return path;
+        }
+
+        if(path.charAt(path.length()-1) != File.separatorChar){
+            return path + File.separator;
+        }
+
+        return path;
+    }
+
 }
