@@ -41,7 +41,20 @@ To generate just the AsciiDoc files and ignore the genration of the default HTML
 
 [source,xml]
 --
-include::sample/pom.xml[tags=exportdoclet-only,indent=0]
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-javadoc-plugin</artifactId>
+    <version>2.10.4</version>
+    <configuration>
+        <doclet>org.asciidoctor.ExportDoclet</doclet>
+        <docletArtifact>
+            <groupId>org.asciidoctor</groupId>
+            <artifactId>exportdoclet</artifactId>
+            <version>1.5.4-SNAPSHOT</version>
+        </docletArtifact>
+        <useStandardDocletOptions>true</useStandardDocletOptions>
+    </configuration>
+</plugin>
 --
 
 Now, to generate the javadocs in AsciiDoc files you can execute the javadoc:javadoc goal in Maven, using your IDE or the command line inside your project root directory:
@@ -57,7 +70,54 @@ If you want to generate both the AsciiDoc and HTML files, that requires two diff
 
 [source,xml]
 --
-include::sample/pom.xml[tags=asciidoclets,indent=0]
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-javadoc-plugin</artifactId>
+    <version>2.10.4</version>
+    <executions>
+        <!-- Exports javadocs containing AsciiDoc to HTML -->
+        <execution>
+            <id>html</id>
+            <phase>package</phase>
+            <goals>
+                <goal>javadoc</goal>
+            </goals>
+            <configuration>
+                <doclet>org.asciidoctor.Asciidoclet</doclet>
+                <docletArtifact>
+                    <groupId>org.asciidoctor</groupId>
+                    <artifactId>asciidoclet</artifactId>
+                    <version>1.5.4</version>
+                </docletArtifact>
+                <additionalparam>
+                    --base-dir ${project.basedir}
+                    --attribute "name=${project.name}"
+                    --attribute "version=${project.version}"
+                </additionalparam>
+            </configuration>
+        </execution>
+        <!-- Exports javadocs containing AsciiDoc to AsciiDoc files -->
+        <execution>
+            <id>asciidoc</id>
+            <phase>package</phase>
+            <goals>
+                <goal>javadoc</goal>
+            </goals>
+            <configuration>
+                <doclet>org.asciidoctor.ExportDoclet</doclet>
+                <docletArtifact>
+                    <groupId>org.asciidoctor</groupId>
+                    <artifactId>exportdoclet</artifactId>
+                    <version>1.5.4-SNAPSHOT</version>
+                </docletArtifact>
+                <useStandardDocletOptions>true</useStandardDocletOptions>
+                <additionalparam>
+                    -d "${project.build.directory}/site/asciidocs"
+                </additionalparam>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
 --
 
 You can see a link:sample[sample project] that has some java files with javadocs containing AsciiDoc, and that has everything configured in the pom.xml.
