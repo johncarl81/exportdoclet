@@ -135,3 +135,5 @@ You can see a link:sample[sample project] that has some java files with javadocs
 == Additional References
 - link:http://www.manpagez.com/man/1/javadoc/[The javadoc command line manual]
 - link:http://www.oracle.com/technetwork/articles/java/index-jsp-135444.html[Javadoc Tool Home Page]
+- link:https://maven.apache.org/plugins/maven-javadoc-plugin[Javadoc Maven Plugin]
+- link:https://github.com/asciidoctor/asciidoclet[AsciiDoclet]
