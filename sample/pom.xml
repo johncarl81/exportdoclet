@@ -6,7 +6,7 @@
 
     <groupId>org.asciidoctor</groupId>
     <artifactId>exportdoclet-sample</artifactId>
-    <version>1.0</version>
+    <version>1.0.0-SNAPSHOT</version>
 
     <description>
     A sample project with a set of classes used just

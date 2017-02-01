@@ -1,41 +1,48 @@
 = ExportDoclet
 
-image:https://travis-ci.org/johncarl81/exportdoclet.svg?branch=master["Build Status", link="https://travis-ci.org/johncarl81/exportdoclet"] image:http://img.shields.io/badge/license-ASF2-blue.svg["Apache License 2", link="http://www.apache.org/licenses/LICENSE-2.0.txt"]
+image:https://travis-ci.org/johncarl81/exportdoclet.svg?branch=master["Build Status", link="https://travis-ci.org/johncarl81/exportdoclet"] 
 
 A link:http://docs.oracle.com/javase/1.5.0/docs/guide/javadoc/doclet/overview.html[Doclet] that allows exporting javadoc
-comments containing link:http://asciidoctor.org[AsciiDoc] text to AsciiDoc files, enabling combining the javadoc
-documentation into the AsciiDoc documentation for your Java project.
+comments containing link:http://asciidoctor.org[AsciiDoc] text to AsciiDoc files, enabling combining the javadocs into a broader AsciiDoc documentation for your Java project.
 
-Instead of exporting the javadoc comments to standard HTML files, the ExportDoclet exports them to AsciiDoc files,
-that in turn can converted to any output format supported by the link:http://asciidoctor.org[AsciiDoctor toolchain].
+Instead of exporting the javadoc comments to standard HTML files, the ExportDoclet exports them to AsciiDoc files, that in turn can be converted to any output format supported by the link:http://asciidoctor.org[AsciiDoctor toolchain].
+
+Using the ExportDoctor, one can put together the source code documentation (javadocs written in AsciiDoc), quick start guides, user guides, FAQs and any other documentation for Java projects. 
+
+AsciiDoc is a non-disturbing and clean markup language that you can use to write your javadocs. It provides a fast, elegant and professional way to write your documentation, beyond allowing the use of several new resources such as automatic code highlight and inclusion of snippets of code from your source files, providing a powerful way to keep your documentation updated with your code. 
+
+ExportDoclet encourages developers to write meaninguful and expanded documentation that goes beyond the source code documentation, by enabling the integration with other plugins such as the link:https://github.com/asciidoctor/asciidoclet[AsciiDoclet] and link:https://github.com/asciidoctor/asciidoctor-maven-plugin[Maven AsciiDoctor Plugin].
 
 == Building the ExportDoclet
 
 ExportDoclet is a Java Maven project that can be built directly from any IDE or using the following maven command:
 
 [source,bash]
-mvn clean package install
+mvn clean install
 
 That will build the tool and install it at your local maven repository, usually at the .m2 directory
 inside your home directory.
 
-== Using the ExportDoclet with javadoc by command line
+== How to use ExportDoclet
+There are different ways to use the ExportDoclet together with the javadoc tool, depending on your goal and project type. The next sub-sections present some of these ways.
+
+=== Using the ExportDoclet with javadoc by command line
 
 To manually call the javadoc tool by command line using the ExportDoclet you have to follow
 the next steps in a terminal:
 
 - Enter into the folder that contains the java files with javadoc comments you want to export
-- Execute `javadoc -docletpath $DOCLETJAR -doclet org.asciidoctor.ExportDoclet -d $OUTPUTDIR *.java`,
-where `$DOCLETJAR` is the path for the ExportDoclet jar file and `$OUTPUTDIR` is where you want
-to save the exported javadocs.
+- Execute `javadoc -docletpath $DOCLETJAR -doclet org.asciidoctor.ExportDoclet -d $OUTPUTDIR *.java`, where: 
+    ** `$DOCLETJAR` is the path for the ExportDoclet jar file (that you built using the instructions in the previous section, or downloaded from maven central) 
+    ** `$OUTPUTDIR` is where you want to save the exported asciidoc files.
 
-== Using ExportDoclet with Maven javadoc plugin
+=== Using ExportDoclet with Maven javadoc plugin
 
 Using the ExportDoclet with Maven is pretty simple. You can include the maven-javadoc-plugin configuration inside the `<build>` section of project's pom.xml file, defining the required configuration for the javadoc command line tool that was used above. 
 
 The sub-sections below present some distinct configurations.
 
-=== Generating only the AsciiDoc files
+==== Generating only the AsciiDoc files
 
 To generate just the AsciiDoc files and ignore the genration of the default HTML files, you can include the following code to the `<build>` section of your project's pom.xml.
 
@@ -64,7 +71,7 @@ mvn javadoc:javadoc
 
 The exported javadocs to AsciiDoc files will be found at target/site/apidocs directory.
 
-=== Generating both the AsciiDoc and default HTML files
+==== Generating both the AsciiDoc and default HTML files
 
 If you want to generate both the AsciiDoc and HTML files, that requires two different configurations for the maven-javadoc-plugin, as exemplified below:
 
@@ -125,15 +132,20 @@ Now, to generate the javadocs both in AsciiDoc and HTML files, you can execute t
 [source,bash]
 mvn package
 
-
 You can see a link:sample[sample project] that has some java files with javadocs containing AsciiDoc, and that has everything configured in the pom.xml.
+
+== How to use the generated AsciiDoc Files
+After using the ExportDoclet to export the javadoc comments written in AsciiDoc, you can put together your entire project documentation (javadocs, quick start guides, user guides, FAQs, etc) and exporting them to several different formats such as beautiful HTMLs, PDF, epub or any other format supported by  link:http://asciidoctor.org[AsciiDoctor].
+
+In order to accomplish that, you can use the link:https://github.com/asciidoctor/asciidoctor-maven-plugin[Maven AsciiDoctor Plugin] to automate the process of collecting all AsciiDoc files, that compound the entire project documentation, and export them to any deployment format such as HTML or PDF.
 
 == Contributors
 
 - link:http://twitter.com/manoelcampos[Manoel Campos da Silva Filho]
 
 == Additional References
-- link:http://www.manpagez.com/man/1/javadoc/[The javadoc command line manual]
-- link:http://www.oracle.com/technetwork/articles/java/index-jsp-135444.html[Javadoc Tool Home Page]
-- link:https://maven.apache.org/plugins/maven-javadoc-plugin[Javadoc Maven Plugin]
+- link:http://www.manpagez.com/man/1/javadoc/[The javadoc Command Line Manual]
+- link:http://www.oracle.com/technetwork/articles/java/index-jsp-135444.html[The javadoc Tool Home Page]
+- link:https://maven.apache.org/plugins/maven-javadoc-plugin[Maven javadoc Plugin]
 - link:https://github.com/asciidoctor/asciidoclet[AsciiDoclet]
+- link:https://github.com/asciidoctor/asciidoctor-maven-plugin[Maven AsciiDoctor Plugin]

@@ -1,8 +1,7 @@
 /.classpath
 /.project
 /.settings/
-.idea/*
-sample/.idea/*
+**/.idea/*
 *~
 *.iml
 target

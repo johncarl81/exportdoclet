@@ -147,6 +147,9 @@
                 <version>1.9.0</version>
                 <configuration>
                     <header>NOTICE</header>
+                    <mapping>
+                        <java>SLASHSTAR_STYLE</java>
+                    </mapping>
                     <includes>
                         <include>**/*.java</include>
                         <include>**/*.xml</include>
