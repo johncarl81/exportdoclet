@@ -4,8 +4,6 @@ image:https://travis-ci.org/johncarl81/exportdoclet.svg?branch=master["Build Sta
 image:https://maven-badges.herokuapp.com/maven-central/org.asciidoctor/exportdoclet/badge.svg["Maven Central", link="https://maven-badges.herokuapp.com/maven-central/org.asciidoctor/exportdoclet"]
 image:https://img.shields.io/bintray/v/asciidoctor/maven/asciidoclet.svg["Download", link="https://bintray.com/asciidoctor/maven/asciidoclet"]
 
-
-
 A link:http://docs.oracle.com/javase/1.5.0/docs/guide/javadoc/doclet/overview.html[Doclet] that allows exporting javadoc
 comments containing link:http://asciidoctor.org[AsciiDoc] text to AsciiDoc files, enabling combining the javadocs into a broader AsciiDoc documentation for your Java project.
 
@@ -77,7 +75,9 @@ The exported javadocs to AsciiDoc files will be found at target/site/apidocs dir
 
 ==== Generating both the AsciiDoc and default HTML files
 
-If you want to generate both the AsciiDoc and HTML files, that requires two different configurations for the maven-javadoc-plugin, as exemplified below:
+If you want to generate both the AsciiDoc and HTML files, that requires two different configurations for the maven-javadoc-plugin, 
+as exemplified below. That includes the link:https://github.com/asciidoctor/asciidoclet[AsciiDoclet] to enable converting
+the AsciiDoclet tags inside your javadoc comments to HTML tags.
 
 [source,xml]
 --
