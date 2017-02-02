@@ -1,6 +1,10 @@
 = ExportDoclet
 
 image:https://travis-ci.org/johncarl81/exportdoclet.svg?branch=master["Build Status", link="https://travis-ci.org/johncarl81/exportdoclet"] 
+image:https://maven-badges.herokuapp.com/maven-central/org.asciidoctor/exportdoclet/badge.svg["Maven Central", link="https://maven-badges.herokuapp.com/maven-central/org.asciidoctor/exportdoclet"]
+image:https://img.shields.io/bintray/v/asciidoctor/maven/asciidoclet.svg["Download", link="https://bintray.com/asciidoctor/maven/asciidoclet"]
+
+
 
 A link:http://docs.oracle.com/javase/1.5.0/docs/guide/javadoc/doclet/overview.html[Doclet] that allows exporting javadoc
 comments containing link:http://asciidoctor.org[AsciiDoc] text to AsciiDoc files, enabling combining the javadocs into a broader AsciiDoc documentation for your Java project.
@@ -33,7 +37,7 @@ the next steps in a terminal:
 
 - Enter into the folder that contains the java files with javadoc comments you want to export
 - Execute `javadoc -docletpath $DOCLETJAR -doclet org.asciidoctor.ExportDoclet -d $OUTPUTDIR *.java`, where: 
-    ** `$DOCLETJAR` is the path for the ExportDoclet jar file (that you built using the instructions in the previous section, or downloaded from maven central) 
+    ** `$DOCLETJAR` is the path for the ExportDoclet jar file (that you built using the instructions in the previous section, downloaded from link:https://maven-badges.herokuapp.com/maven-central/org.asciidoctor/exportdoclet[maven central] or link:https://bintray.com/asciidoctor/maven/asciidoclet[bintray]) 
     ** `$OUTPUTDIR` is where you want to save the exported asciidoc files.
 
 === Using ExportDoclet with Maven javadoc plugin
