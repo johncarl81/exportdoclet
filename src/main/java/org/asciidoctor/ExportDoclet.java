@@ -1,5 +1,5 @@
 /*
- * Copyright 2013-2015 John Ericksen
+ * Copyright 2013-2016 John Ericksen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import com.sun.javadoc.LanguageVersion;
 import com.sun.javadoc.RootDoc;
 
 /**
- * A {@link Doclet} that exports javadoc comments containing AsciiDoc text to AsciiDoc files,
+ * A link:Doclet[] that exports javadoc comments containing AsciiDoc text to AsciiDoc files,
  * instead of specific final formats such as HTML.
  *
  * @author John Ericksen
@@ -89,9 +89,9 @@ public class ExportDoclet extends Doclet {
     }
 
     /**
-     * Renders the javadoc documentation for all elements inside the {@link RootDoc} object
+     * Renders the javadoc documentation for all elements inside the link:RootDoc[] object
      * received by this doclet.
-     * @return true if the {@link RootDoc} was rendered successfully, false otherwise
+     * @return true if the link:RootDoc[] was rendered successfully, false otherwise
      */
     private boolean render(){
         return renderer.render();

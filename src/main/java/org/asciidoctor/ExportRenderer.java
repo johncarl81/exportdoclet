@@ -1,5 +1,5 @@
 /*
- * Copyright 2013-2015 John Ericksen
+ * Copyright 2013-2016 John Ericksen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ import java.util.Set;
 /**
  * A renderer class that actually exports javadoc comments containing AsciiDoc text to AsciiDoc files,
  * instead of specific final formats such as HTML.
- * It is used when the {@link ExportDoclet} is started.
+ * It is used when the link:ExportDoclet[] is started.
  *
  * @author John Ericksen
  */
@@ -49,7 +49,7 @@ public class ExportRenderer {
     }
 
     /**
-     * Renders classes and packages javadocs, inside a {@link RootDoc} object, to AsciiDoc files.
+     * Renders classes and packages javadocs, inside a link:RootDoc[] object, to AsciiDoc files.
      *
      * @return true if successful, false otherwise
      */
@@ -126,12 +126,12 @@ public class ExportRenderer {
     }
 
     /**
-     * Exports a javadoc comment using a given {@link PrintWriter}, surrounding
+     * Exports a javadoc comment using a given link:PrintWriter[], surrounding
      * it by a AsciiDoc tag with a specific name.
      *
      * @param tag the name of the tag to surround the javadoc comment into the AsciiDoc file
      * @param comment the javadoc comment to export
-     * @param writer the {@link PrintWriter} to be used to export the javadoc comment to an AsciiDoc file
+     * @param writer the link:PrintWriter[] to be used to export the javadoc comment to an AsciiDoc file
      */
     private void outputText(String tag, String comment, PrintWriter writer) {
         writer.println("// tag::" + tag + "[]");
@@ -146,7 +146,7 @@ public class ExportRenderer {
     }
 
     /**
-     * Gets a {@link PrintWriter} to export the documentation of a class or package
+     * Gets a link:PrintWriter[] to export the documentation of a class or package
      * to an AsciiDoc file.
      *
      * @param packageDoc the package documentation object that will be the package that the documentation

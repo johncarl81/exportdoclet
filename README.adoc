@@ -135,6 +135,7 @@ mvn package
 You can see a link:sample[sample project] that has some java files with javadocs containing AsciiDoc, and that has everything configured in the pom.xml.
 
 == How to use the generated AsciiDoc Files
+
 After using the ExportDoclet to export the javadoc comments written in AsciiDoc, you can put together your entire project documentation (javadocs, quick start guides, user guides, FAQs, etc) and exporting them to several different formats such as beautiful HTMLs, PDF, epub or any other format supported by  link:http://asciidoctor.org[AsciiDoctor].
 
 In order to accomplish that, you can use the link:https://github.com/asciidoctor/asciidoctor-maven-plugin[Maven AsciiDoctor Plugin] to automate the process of collecting all AsciiDoc files, that compound the entire project documentation, and export them to any deployment format such as HTML or PDF.
