@@ -8,7 +8,7 @@
     <packaging>jar</packaging>
     <version>1.5.4-SNAPSHOT</version>
 
-    <name>Output Doclet</name>
+    <name>Export Doclet</name>
 
     <parent>
         <groupId>org.sonatype.oss</groupId>
@@ -17,7 +17,7 @@
     </parent>
 
     <url>http://asciidoctor.org</url>
-    <description>Exportdoclet is a Javadoc Doclet that exports javadocs to files.</description>
+    <description>Exportdoclet is a Javadoc Doclet that exports javadocs written in AsciiDoc to adoc files.</description>
 
     <licenses>
         <license>

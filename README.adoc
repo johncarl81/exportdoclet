@@ -9,7 +9,7 @@ comments containing link:http://asciidoctor.org[AsciiDoc] text to AsciiDoc files
 
 Instead of exporting the javadoc comments to standard HTML files, the ExportDoclet exports them to AsciiDoc files, that in turn can be converted to any output format supported by the link:http://asciidoctor.org[AsciiDoctor toolchain].
 
-Using the ExportDoctor, one can put together the source code documentation (javadocs written in AsciiDoc), quick start guides, user guides, FAQs and any other documentation for Java projects. 
+Using the ExportDoclet, one can put together the source code documentation (javadocs written in AsciiDoc), quick start guides, user guides, FAQs and any other documentation for Java projects. 
 
 AsciiDoc is a non-disturbing and clean markup language that you can use to write your javadocs. It provides a fast, elegant and professional way to write your documentation, beyond allowing the use of several new resources such as automatic code highlight and inclusion of snippets of code from your source files, providing a powerful way to keep your documentation updated with your code. 
 
@@ -35,7 +35,7 @@ the next steps in a terminal:
 
 - Enter into the folder that contains the java files with javadoc comments you want to export
 - Execute `javadoc -docletpath $DOCLETJAR -doclet org.asciidoctor.ExportDoclet -d $OUTPUTDIR *.java`, where: 
-    ** `$DOCLETJAR` is the path for the ExportDoclet jar file (that you built using the instructions in the previous section, downloaded from link:https://maven-badges.herokuapp.com/maven-central/org.asciidoctor/exportdoclet[maven central] or link:https://bintray.com/asciidoctor/maven/asciidoclet[bintray]) 
+    ** `$DOCLETJAR` is the path for the ExportDoclet jar file (that you built using the instructions in the previous section, or downloaded from link:https://maven-badges.herokuapp.com/maven-central/org.asciidoctor/exportdoclet[maven central] or link:https://bintray.com/asciidoctor/maven/asciidoclet[bintray]) 
     ** `$OUTPUTDIR` is where you want to save the exported asciidoc files.
 
 === Using ExportDoclet with Maven javadoc plugin
@@ -134,7 +134,7 @@ the AsciiDoclet tags inside your javadoc comments to HTML tags.
 Now, to generate the javadocs both in AsciiDoc and HTML files, you can execute the `package` goal in Maven, using your IDE or the command line inside your project root directory:
 
 [source,bash]
-mvn package
+mvn clean package
 
 You can see a link:sample[sample project] that has some java files with javadocs containing AsciiDoc, and that has everything configured in the pom.xml.
 
