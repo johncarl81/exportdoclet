@@ -13,10 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package people;
 
 /**
- * Provides the classes that implement the link:ExportDoclet[] to extract javadoc comments,
- * written in AsciiDoc, from java source files and export then to AsciiDoc files.
- * @author John Ericksen
+ * An interface to represent different kinds of People.
+ *
+ * @author http://twitter.com/manoelcampos[Manoel Campos da Silva Filho]
+ * @see https://en.wikipedia.org/wiki/People[People at Wikipedia]
  */
-package org.asciidoctor;
+public interface Person {
+    /**
+     * Gets the person's name.
+     * @return the name of the person
+     */
+    String getName();
+}

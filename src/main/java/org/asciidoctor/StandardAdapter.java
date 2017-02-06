@@ -1,5 +1,5 @@
-/**
- * Copyright 2013-2015 John Ericksen
+/*
+ * Copyright 2013-2016 John Ericksen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,11 +16,12 @@
 package org.asciidoctor;
 
 import com.sun.javadoc.DocErrorReporter;
+import com.sun.javadoc.Doclet;
 import com.sun.javadoc.RootDoc;
 import com.sun.tools.doclets.standard.Standard;
 
 /**
- * Adapter class to use the Standard Javadoc Doclet in a non-static context.
+ * Adapter class to use the link:Standard[] Javadoc link:Doclet[] in a non-static context.
  *
  * @author John Ericksen
  */

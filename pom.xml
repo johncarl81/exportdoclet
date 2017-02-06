@@ -6,9 +6,9 @@
     <groupId>org.asciidoctor</groupId>
     <artifactId>exportdoclet</artifactId>
     <packaging>jar</packaging>
-    <version>1.5.3-SNAPSHOT</version>
+    <version>1.5.4-SNAPSHOT</version>
 
-    <name>Output Doclet</name>
+    <name>Export Doclet</name>
 
     <parent>
         <groupId>org.sonatype.oss</groupId>
@@ -17,7 +17,7 @@
     </parent>
 
     <url>http://asciidoctor.org</url>
-    <description>Exportdoclet is a Javadoc Doclet that exports javadocs to files.</description>
+    <description>Exportdoclet is a Javadoc Doclet that exports javadocs written in AsciiDoc to adoc files.</description>
 
     <licenses>
         <license>
@@ -147,6 +147,9 @@
                 <version>1.9.0</version>
                 <configuration>
                     <header>NOTICE</header>
+                    <mapping>
+                        <java>SLASHSTAR_STYLE</java>
+                    </mapping>
                     <includes>
                         <include>**/*.java</include>
                         <include>**/*.xml</include>
@@ -172,7 +175,7 @@
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
-                    <finalName>${build.finalName}-all</finalName>
+                    <finalName>${project.build.finalName}-all</finalName>
                     <appendAssemblyId>false</appendAssemblyId>
                 </configuration>
                 <executions>

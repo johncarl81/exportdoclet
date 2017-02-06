@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.asciidoctor</groupId>
+    <artifactId>exportdoclet-sample</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <description>
+    A sample project with a set of classes used just
+    to demonstrate how the org.asciidoctor.exportdoclet plugin exports
+    the javadoc from the project java files as AsciiDoc files.
+    </description>
+
+    <developers>
+        <developer>
+            <name>Manoel Campos da Silva Filho</name>
+            <url>http://twitter.com/manoelcampos</url>
+        </developer>
+    </developers>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.build.sourceFormat>1.8</project.build.sourceFormat>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.6.1</version>
+                <configuration>
+                    <source>${project.build.sourceFormat}</source>
+                    <target>${project.build.sourceFormat}</target>
+                </configuration>
+            </plugin>
+
+            <!--
+            Exports javadocs comments containing AsciiDoc to AsciiDoc files.
+            This plugin configuration must be used just if you want to generate
+            only the AsciiDoc files and ignore the generation of default HTML files.
+            In that case, the following plugin can be removed.
+
+            To execute the goal: mvn javadoc:javadoc
+            -->
+            <!-- tag::exportdoclet-only[] -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.4</version>
+                <configuration>
+                    <doclet>org.asciidoctor.ExportDoclet</doclet>
+                    <docletArtifact>
+                        <groupId>org.asciidoctor</groupId>
+                        <artifactId>exportdoclet</artifactId>
+                        <version>1.5.4-SNAPSHOT</version>
+                    </docletArtifact>
+                    <useStandardDocletOptions>true</useStandardDocletOptions>
+                </configuration>
+            </plugin>
+            <!-- end::exportdoclet-only[] -->
+
+            <!--
+            Exports javadocs comments containing AsciiDoc to both AsciiDoc and default HTML files.
+            This plugin configuration must be used just if you want to generate file formats.
+            In that case, the previous plugin can be removed.
+
+            To execute the goal: mvn package
+            -->
+            <!-- tag::asciidoclets[] -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.4</version>
+                <executions>
+                    <!-- Exports javadocs containing AsciiDoc to HTML -->
+                    <execution>
+                        <id>html</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>javadoc</goal>
+                        </goals>
+                        <configuration>
+                            <doclet>org.asciidoctor.Asciidoclet</doclet>
+                            <docletArtifact>
+                                <groupId>org.asciidoctor</groupId>
+                                <artifactId>asciidoclet</artifactId>
+                                <version>1.5.4</version>
+                            </docletArtifact>
+                            <additionalparam>
+                                --base-dir ${project.basedir}
+                                --attribute "name=${project.name}"
+                                --attribute "version=${project.version}"
+                            </additionalparam>
+                        </configuration>
+                    </execution>
+                    <!-- Exports javadocs containing AsciiDoc to AsciiDoc files -->
+                    <execution>
+                        <id>asciidoc</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>javadoc</goal>
+                        </goals>
+                        <configuration>
+                            <doclet>org.asciidoctor.ExportDoclet</doclet>
+                            <docletArtifact>
+                                <groupId>org.asciidoctor</groupId>
+                                <artifactId>exportdoclet</artifactId>
+                                <version>1.5.4-SNAPSHOT</version>
+                            </docletArtifact>
+                            <useStandardDocletOptions>true</useStandardDocletOptions>
+                            <additionalparam>
+                                -d "${project.build.directory}/site/asciidocs"
+                            </additionalparam>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- end::asciidoclets[] -->
+        </plugins>
+    </build>
+</project>
