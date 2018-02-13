@@ -3,7 +3,7 @@
 image:https://travis-ci.org/johncarl81/exportdoclet.svg?branch=master["Build Status", link="https://travis-ci.org/johncarl81/exportdoclet"] 
 
 A link:http://docs.oracle.com/javase/1.5.0/docs/guide/javadoc/doclet/overview.html[Doclet] that allows exporting javadoc
-comments containing link:http://asciidoctor.org[AsciiDoc] text to AsciiDoc files, enabling combining the javadocs into a broader AsciiDoc documentation for your Java project.
+comments containing link:http://asciidoctor.org[AsciiDoc] markup to AsciiDoc files, enabling combining the javadocs into a broader AsciiDoc documentation for your Java project.
 
 Instead of exporting the javadoc comments to standard HTML files, the ExportDoclet exports them to AsciiDoc files, that in turn can be converted to any output format supported by the link:http://asciidoctor.org[AsciiDoctor toolchain].
 
@@ -15,12 +15,12 @@ ExportDoclet encourages developers to write meaninguful and expanded documentati
 
 == Building the ExportDoclet
 
-ExportDoclet is a Java Maven project that can be built directly from any IDE or using the following maven command:
+ExportDoclet is a Java Maven project which can be built directly from any IDE or using the following maven command:
 
 [source,bash]
 mvn clean install
 
-That will build the tool and install it at your local maven repository, usually at the .m2 directory
+That will build the tool and install it at your local maven repository, usually at the `.m2` directory
 inside your home directory.
 
 == How to use ExportDoclet
