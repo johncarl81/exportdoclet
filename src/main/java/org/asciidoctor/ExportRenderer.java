@@ -1,5 +1,5 @@
 /*
- * Copyright 2013-2016 John Ericksen
+ * Copyright 2013-2018 John Ericksen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,20 +15,17 @@
  */
 package org.asciidoctor;
 
-import com.sun.javadoc.AnnotationTypeDoc;
-import com.sun.javadoc.ClassDoc;
-import com.sun.javadoc.MemberDoc;
-import com.sun.javadoc.PackageDoc;
-import com.sun.javadoc.RootDoc;
+import com.sun.javadoc.*;
+import jdk.javadoc.doclet.*;
 
+import javax.lang.model.element.*;
+import javax.lang.model.util.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A renderer class that actually exports javadoc comments containing AsciiDoc text to AsciiDoc files,
@@ -42,9 +39,9 @@ public class ExportRenderer {
      * Holds the root of the program structure information.
      * From this root all other program structure information can be extracted.
      */
-    private final RootDoc rootDoc;
+    private final DocletEnvironment rootDoc;
 
-    public ExportRenderer(RootDoc rootDoc){
+    public ExportRenderer(DocletEnvironment rootDoc){
         this.rootDoc = rootDoc;
     }
 
@@ -54,49 +51,27 @@ public class ExportRenderer {
      * @return true if successful, false otherwise
      */
     public boolean render() {
-        Set<PackageDoc> packages = new HashSet<PackageDoc>();
-        for (ClassDoc doc : rootDoc.classes()) {
-            packages.add(doc.containingPackage());
-            renderClass(doc);
-        }
-
-        for (PackageDoc doc : packages) {
-            renderPackage(doc);
-            //renderer.renderDoc(doc);
-        }
-
+        renderRootElements(rootDoc.getSpecifiedElements());
         return true;
+    }
+
+    private void renderRootElements(Set<? extends Element> elements) {
+        for(Element typeElement : ElementFilter.typesIn(elements)) {
+            renderType(typeElement);
+        }
+        for(Element packageElement : ElementFilter.packagesIn(elements)) {
+            renderPackage(packageElement);
+        }
     }
 
     /**
      * Renders a class documentation to an AsciiDoc file.
      *
-     * @param doc the class documentation object
+     * @param element the class documentation object
      */
-    private void renderClass(ClassDoc doc) {
-        try {
-            PrintWriter writer = getWriter(doc.containingPackage(), doc.name());
-            if (doc.position() != null) {
-                outputText(doc.name(), doc.getRawCommentText(), writer);
-            }
-            for (MemberDoc member : doc.fields(false)) {
-                outputText(member.name(), member.getRawCommentText(), writer);
-            }
-            for (MemberDoc member : doc.constructors(false)) {
-                outputText(member.name(), member.getRawCommentText(), writer);
-            }
-            for (MemberDoc member : doc.methods(false)) {
-                outputText(member.name(), member.getRawCommentText(), writer);
-            }
-            for (MemberDoc member : doc.enumConstants()) {
-                outputText(member.name(), member.getRawCommentText(), writer);
-            }
-            if (doc instanceof AnnotationTypeDoc) {
-                for (MemberDoc member : ((AnnotationTypeDoc) doc).elements()) {
-                    outputText(member.name(), member.getRawCommentText(), writer);
-                }
-            }
-            writer.flush();
+    private void renderType(Element element) {
+        try (PrintWriter writer = getWriter(getPackageName(element), element.getSimpleName().toString())) {
+            renderEnclosedElements(element, writer);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -105,24 +80,40 @@ public class ExportRenderer {
     /**
      * Renders a package documentation to an AsciiDoc file.
      *
-     * @param doc the package documentation object
+     * @param packageElement the package documentation object
      */
-    private void renderPackage(PackageDoc doc){
-        try {
-            PrintWriter writer = getWriter(doc, "package-info");
-            writer.println(doc.name());
-            if (doc.position() != null) {
-                outputText(doc.name(), doc.getRawCommentText(), writer);
-            }
-            if (doc instanceof AnnotationTypeDoc) {
-                for (MemberDoc member : ((AnnotationTypeDoc) doc).elements()) {
-                    outputText(member.name(), member.getRawCommentText(), writer);
-                }
-            }
-            writer.flush();
+    private void renderPackage(Element packageElement){
+        try (PrintWriter writer = getWriter(getPackageName(packageElement), "package-info")) {
+            renderEnclosedElements(packageElement, writer);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    private void renderEnclosedElements(Element rootElement, PrintWriter writer) {
+        outputText(rootElement, writer);
+
+        renderRootElements(new HashSet<>(rootElement.getEnclosedElements()));
+
+        Set<Element> subElements = new HashSet<>(rootElement.getEnclosedElements());
+        subElements.removeAll(ElementFilter.typesIn(rootElement.getEnclosedElements()));
+        subElements.removeAll(ElementFilter.packagesIn(rootElement.getEnclosedElements()));
+
+        for(Element subElement : subElements) {
+            outputText(subElement, writer);
+        }
+
+        writer.flush();
+    }
+
+    private void outputText(List<? extends Element> elements, PrintWriter writer) {
+        for (Element element : elements) {
+            outputText(element.getSimpleName().toString(), rootDoc.getElementUtils().getDocComment(element), writer);
+        }
+    }
+
+    private void outputText(Element element, PrintWriter writer) {
+        outputText(element.getSimpleName().toString(), rootDoc.getElementUtils().getDocComment(element), writer);
     }
 
     /**
@@ -140,6 +131,9 @@ public class ExportRenderer {
     }
 
     private String cleanJavadocInput(String input) {
+        if(input == null) {
+            return "";
+        }
         return input.trim()
                 .replaceAll("\n ", "\n") // Newline space to accommodate javadoc newlines.
                 .replaceAll("(?m)^( *)\\*\\\\/$", "$1*/"); // Multi-line comment end tag is translated into */.
@@ -149,13 +143,13 @@ public class ExportRenderer {
      * Gets a link:PrintWriter[] to export the documentation of a class or package
      * to an AsciiDoc file.
      *
-     * @param packageDoc the package documentation object that will be the package that the documentation
+     * @param packageName the package documentation object that will be the package that the documentation
      *                   is being exported or the package of the class that its documentation
      *                   is being exported
      * @param name the name of the AsciiDoc file to export the documentation to
      */
-    private PrintWriter getWriter(PackageDoc packageDoc, String name) throws FileNotFoundException {
-        File packageDirectory = new File(getOutputDir() + packageDoc.name().replace('.', File.separatorChar));
+    private PrintWriter getWriter(String packageName, String name) throws FileNotFoundException {
+        File packageDirectory = new File(getOutputDir() + packageName.replace('.', File.separatorChar));
         if(!packageDirectory.exists() && !packageDirectory.mkdirs()){
             throw new RuntimeException("The directory was not created due to unknown reason.");
         }
@@ -164,16 +158,20 @@ public class ExportRenderer {
         return new PrintWriter(new OutputStreamWriter(new FileOutputStream(file)));
     }
 
+    private String getPackageName(Element element) {
+        return this.rootDoc.getElementUtils().getPackageOf(element).toString();
+    }
+
     /**
      * Gets the output directory passed as a command line argument to javadoc tool.
      * @return the output directory to export the javadocs
      */
     private String getOutputDir() {
-        for (String[] option : rootDoc.options()) {
+        /*TODO: for (String[] option : rootDoc.options()) {
             if(option.length == 2 && option[0].equals("-d")) {
                 return includeTrailingDirSeparator(option[1]);
             }
-        }
+        }*/
 
         return "";
     }
@@ -198,4 +196,14 @@ public class ExportRenderer {
         return path;
     }
 
+
+    public static final class Test{
+
+        /**
+         * Something
+         */
+        public void test() {
+            
+        }
+    }
 }
