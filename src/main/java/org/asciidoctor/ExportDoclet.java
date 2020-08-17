@@ -35,7 +35,7 @@ public class ExportDoclet extends Doclet {
      * Starts the doclet.
      * @param rootDoc the root of the program structure information.
      *                From this root all other program structure information can be extracted.
-     * @return true if the doclet was started successfuly, false otherwise
+     * @return true if the doclet was started successfully, false otherwise
      * @see Doclet#start(RootDoc)
      */
     @SuppressWarnings("UnusedDeclaration")
