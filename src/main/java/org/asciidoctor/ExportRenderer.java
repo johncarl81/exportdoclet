@@ -96,7 +96,7 @@ public class ExportRenderer {
     }
 
     private void renderEnclosedElements(Element rootElement, PrintWriter writer) {
-        outputText(rootElement, writer);
+        outputText(rootElement, writer, 1);
 
         renderRootElements(new HashSet<>(rootElement.getEnclosedElements()));
 
@@ -105,7 +105,7 @@ public class ExportRenderer {
         subElements.removeAll(ElementFilter.packagesIn(rootElement.getEnclosedElements()));
 
         for(Element subElement : subElements) {
-            outputText(subElement, writer);
+            outputText(subElement, writer, 2);
         }
 
         writer.flush();
@@ -113,12 +113,12 @@ public class ExportRenderer {
 
     private void outputText(List<? extends Element> elements, PrintWriter writer) {
         for (Element element : elements) {
-            outputText(element.getSimpleName().toString(), rootDoc.getElementUtils().getDocComment(element), writer);
+            outputText(element.getSimpleName().toString(), rootDoc.getElementUtils().getDocComment(element), writer, 2);
         }
     }
 
-    private void outputText(Element element, PrintWriter writer) {
-        outputText(element.getSimpleName().toString(), rootDoc.getElementUtils().getDocComment(element), writer);
+    private void outputText(Element element, PrintWriter writer, int level) {
+        outputText(element.getSimpleName().toString(), rootDoc.getElementUtils().getDocComment(element), writer, level);
     }
 
     /**
@@ -129,13 +129,14 @@ public class ExportRenderer {
      * @param comment the javadoc comment to export
      * @param writer the link:PrintWriter[] to be used to export the javadoc comment to an AsciiDoc file
      */
-    private void outputText(String tag, String comment, PrintWriter writer) {
+    private void outputText(String tag, String comment, PrintWriter writer, int level) {
         writer.println("// tag::" + tag + "[]");
         if (includeCaptions) {
-            writer.println(String.format("== %s", tag));
+            writer.println(String.format("%s %s", ("=".repeat(level)), tag));
         }
         writer.println(cleanJavadocInput(comment));
         writer.println("// end::" + tag + "[]");
+        writer.println();
     }
 
     private String cleanJavadocInput(String input) {

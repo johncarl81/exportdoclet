@@ -46,7 +46,7 @@ public class ExportDoclet implements Doclet {
         Option[] options = {
                 new Option() {
                     private final List<String> someOption = Arrays.asList(
-                            "-captions",
+                            "--captions",
                             "-cp"
                     );
 
