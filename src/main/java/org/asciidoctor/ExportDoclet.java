@@ -41,7 +41,7 @@ public class ExportDoclet implements Doclet {
 
     @Override
     public Set<? extends Option> getSupportedOptions() {
-        return new StandardDoclet().getSupportedOptions();
+        return Collections.emptySet();
     }
 
     @Override
