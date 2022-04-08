@@ -15,7 +15,6 @@
  */
 package org.asciidoctor;
 
-import com.sun.javadoc.*;
 import jdk.javadoc.doclet.*;
 
 import javax.lang.model.element.*;
