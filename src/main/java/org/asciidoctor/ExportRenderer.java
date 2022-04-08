@@ -39,9 +39,15 @@ public class ExportRenderer {
      * From this root all other program structure information can be extracted.
      */
     private final DocletEnvironment rootDoc;
+    private final boolean includeCaptions;
 
     public ExportRenderer(DocletEnvironment rootDoc){
+        this(rootDoc, false);
+    }
+
+    public ExportRenderer(DocletEnvironment rootDoc, boolean includeCaptions){
         this.rootDoc = rootDoc;
+        this.includeCaptions = includeCaptions;
     }
 
     /**
@@ -125,6 +131,9 @@ public class ExportRenderer {
      */
     private void outputText(String tag, String comment, PrintWriter writer) {
         writer.println("// tag::" + tag + "[]");
+        if (includeCaptions) {
+            writer.println(String.format("== %s", tag));
+        }
         writer.println(cleanJavadocInput(comment));
         writer.println("// end::" + tag + "[]");
     }
